@@ -1,0 +1,11 @@
+{
+    "name": "millermedia/boilerplate",
+    "description": "{plugin_name}",
+    "type": "project",
+    "require": {},
+	"autoload": {
+		"psr-4": {
+		  "MillerMedia\\Boilerplate\\": "classes/"
+		}
+	}
+}

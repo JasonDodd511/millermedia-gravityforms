@@ -1,0 +1,73 @@
+/**
+ * Plugin Styles
+ *
+ * Created     April 10, 2017
+ * 
+ * @package    Gravity Forms Quiz Groups
+ * @author     Kevin Carwile
+ * @since      0.1.0
+ */
+
+
+.knowledge-charts svg {
+    height: 200px;
+    pointer-events: none;
+    position: relative;
+    width: 200px;
+}
+
+.knowledge-charts svg path {
+    fill: none;
+    stroke-width: 20;
+}
+
+.knowledge-charts svg path:not(.move) {
+    stroke: rgba(0, 0, 0, 0.2);
+}
+
+.knowledge-charts svg .move {
+    stroke: rgba(0, 0, 0, 0.4);
+    stroke-dasharray: 314;
+}
+
+.knowledge-charts svg .move.animate {
+    animation: 1s linear 0s normal forwards 1 running draw;
+}
+
+.knowledge-charts svg text {
+    fill: rgba(0, 0, 0, 0.4);
+    font-size: 1.25em;
+    font-weight: bold;
+    text-anchor: middle;
+}
+
+
+@keyframes draw {
+	0% {
+		stroke-dashoffset: 314;
+	}
+}
+
+@keyframes draw {
+	0% {
+		stroke-dashoffset: 314;
+	}
+}
+
+.knowledge-charts .table {
+  display: inline-block;
+  font-size: 0;
+  white-space: nowrap;
+}
+
+.knowledge-charts .table > li {
+    font-size: 1rem;
+    list-style: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.knowledge-charts li h3 {
+	text-align: center;
+	margin-bottom: -30px;
+}
