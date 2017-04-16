@@ -126,7 +126,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 					}				
 				}
 				
-				echo $this->getTemplateContent( 'quiz/charts/knowledge-areas', array( 'form' => $form, 'lead' => $lead, 'results' => $results, 'areas' => $knowledge_area_results ) );
+				return $this->getTemplateContent( 'quiz/charts/knowledge-areas', array( 'form' => $form, 'lead' => $lead, 'results' => $results, 'areas' => $knowledge_area_results ) );
 			}
 		}
 		else 
