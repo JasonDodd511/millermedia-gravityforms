@@ -99,7 +99,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 			// Allow dynamic setting of lead_id via request parameter
 			if ( ! isset( $atts[ 'lead_id' ] ) and isset( $_REQUEST[ 'lead_id' ] ) )
 			{
-				$atts[ 'lead_id' ] = inval( $_REQUEST[ 'lead_id' ] );
+				$atts[ 'lead_id' ] = intval( $_REQUEST[ 'lead_id' ] );
 			}
 			
 			if ( isset( $atts[ 'form_id' ] ) and isset( $atts[ 'lead_id' ] ) )
