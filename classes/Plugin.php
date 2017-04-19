@@ -77,25 +77,31 @@ class Plugin extends \Modern\Wordpress\Plugin
 	}
 	
 	/**
-	 * 
+	 * Build a chart with the quiz results
 	 * 
 	 * @Wordpress\Shortcode( name="quiz_knowledge_results" )
 	 * 
-	 * 
+	 * @param	array		$atts				Shortcode attributes
+	 * @param	string		$content			Any content wrapped with the shortcode
+	 * @return	string
 	 */
 	public function outputQuizKnowledgeResults( $atts, $content )
 	{
 		// Require gravity forms api to be loaded
 		if ( class_exists( 'GFAPI' ) and class_exists( 'GFQuiz' ) )
 		{
-			if ( ! isset ( $atts[ 'form_id' ] ) and ! isset( $atts[ 'lead_id' ] ) )
+			// Allow dynamic setting of form_id via request parameter
+			if ( ! isset( $atts[ 'form_id' ] ) and isset( $_REQUEST[ 'form_id' ] ) )
 			{
-				if ( isset( $_GET[ 'form_id' ]) and isset( $_GET{ 'lead_id' }) and \GFAPI::get_form( $_GET[ 'form_id' ] ) )
-				{
-					$atts   = array( 'form_id' => $_GET['form_id'], 'lead_id' => $_GET['lead_id']);
-				}
+				$atts[ 'form_id' ] = intval( $_REQUEST[ 'form_id' ] );
 			}
-
+			
+			// Allow dynamic setting of lead_id via request parameter
+			if ( ! isset( $atts[ 'lead_id' ] ) and isset( $_REQUEST[ 'lead_id' ] ) )
+			{
+				$atts[ 'lead_id' ] = inval( $_REQUEST[ 'lead_id' ] );
+			}
+			
 			if ( isset( $atts[ 'form_id' ] ) and isset( $atts[ 'lead_id' ] ) )
 			{
 				$form    = \GFAPI::get_form( $atts[ 'form_id' ] );
@@ -117,7 +123,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 					{
 						$area = $field->gquizKnowledgeArea ?: 'General';
 						
-						if ( ! empty( $knowledge_area[ $area ] ) )
+						if ( ! isset( $knowledge_area_results[ $area ] ) )
 						{
 							$knowledge_area_results[ $area ] = array();
 						}
@@ -131,7 +137,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 		}
 		else 
 		{
-			echo "[quiz_knowledge_results] ( This shortcode requires gravity forms + the quiz add-on )";
+			return "[quiz_knowledge_results] ( This shortcode requires gravity forms + the quiz add-on )";
 		}
 	}
 	
