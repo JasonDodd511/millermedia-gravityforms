@@ -91,7 +91,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 		if ( class_exists( 'GFAPI' ) and class_exists( 'GFQuiz' ) )
 		{
 			// Allow dynamic setting of form_id via request parameter
-			if ( ! isset( $atts[ 'form_id' ] ) and isset( $_REQUEST[ 'form_id' ] ) and \GFAPI::get_form( $_REQUEST[ 'form_id' ] )
+			if ( ! isset( $atts[ 'form_id' ] ) and isset( $_REQUEST[ 'form_id' ] ) and \GFAPI::get_form( $_REQUEST[ 'form_id' ] ))
 			{
 				$atts[ 'form_id' ] = intval( $_REQUEST[ 'form_id' ] );
 			}

@@ -3,7 +3,7 @@
  * Plugin Name: Gravity Forms Quiz Groups
  * Depends: lib-modern-framework
  * Description: Extension features for the gravity forms quiz plugin that provides advanced insights.
- * Version: 0.1.1.3
+ * Version: 0.1.1.4
  * Author: Kevin Carwile
  * Author URI:
  * GitHub Plugin URI: https://github.com/JasonDodd511/millermedia-gravityforms
