@@ -5,7 +5,10 @@
  * Description: Extension features for the gravity forms quiz plugin that provides advanced insights.
  * Version: 0.1.1.2
  * Author: Kevin Carwile
- * Author URI: 
+ * Author URI:
+ * GitHub Plugin URI: https://github.com/JasonDodd511/millermedia-gravityforms
+ * GitHub Branch:     master
+ * GitHub Languages:
  */
  
 if ( ! defined( 'ABSPATH' ) ) {
