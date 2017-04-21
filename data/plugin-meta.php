@@ -8,6 +8,6 @@ return <<<'JSON'
     "namespace": "MillerMedia\\GravityForms",
     "slug": "millermedia-gravityforms",
     "autoupdate": true,
-    "version": "0.1.0"
+    "version": "0.1.1.2"
 }
 JSON;
