@@ -107,6 +107,7 @@ class Plugin extends \Modern\Wordpress\Plugin
 				$form    = \GFAPI::get_form( $atts[ 'form_id' ] );
 				$lead    = \RGFormsModel::get_lead( $atts[ 'lead_id' ] );
 				
+				// Sanity check
 				if ( ! $form or ! $lead )
 				{
 					return "Invalid form data requested.";
@@ -145,6 +146,76 @@ class Plugin extends \Modern\Wordpress\Plugin
 		{
 			return "[quiz_knowledge_results] ( This shortcode requires gravity forms + the quiz add-on )";
 		}
+	}
+	
+	/**
+	 * Add taxonomy term selection to the form settings
+	 * 
+	 * @Wordpress\Filter( for="gform_form_settings", args=2 )
+	 * 
+	 * @param	array		$form_settings		The form settings areas
+	 * @param	array		$form				Form meta
+	 * @return	array
+	 */
+	public function addGFTaxonomy( $form_settings, $form )
+	{
+		if ( $taxonomy = get_taxonomy( $this->getSetting( 'classification_taxonomy' ) ) )
+		{
+			$form_settings[ 'Classification' ] = array( 'taxonomy_options' => $this->getTemplateContent( 'quiz/admin/taxonomy', array( 'form' => $form, 'taxonomy' => $taxonomy ) ) );
+		}
+		
+		return $form_settings;
+	}
+	
+	/**
+	 * Save submitted classification terms with the updated form data
+	 * 
+	 * @Wordpress\Filter( for="gform_pre_form_settings_save" ) 
+	 * 
+	 * @param	array			$updated_form				Update form values from submission
+	 * @return	array
+	 */
+	public function processFormEditSettingsSubmit( $updated_form )
+	{
+		$updated_form[ 'classification_terms' ] = rgpost( 'classification_terms' ) ?: array();
+		return $updated_form;
+	}	
+	
+	/**
+	 * Shortcode for generating a random gravity form from a taxonomy term
+	 * 
+	 * @Wordpress\Shortcode( name="random_gravityform" )
+	 * 
+	 * @param	array		$atts			Shortcode attributes
+	 * @param	string		$content		Content that the shortcode wraps
+	 * @return	string
+	 */
+	public function randomGravityForm( $atts, $content )
+	{
+		if ( class_exists( 'GFForms' ) )
+		{
+			if ( isset( $atts[ 'term' ] ) )
+			{
+				$term = intval( $atts[ 'term' ] );
+				$db = Framework::instance()->db();
+				
+				// Let MySQL find forms that contain our term inside its json encoded data
+				$form_ids = $db->get_col( "SELECT form_id FROM {$db->prefix}rg_form_meta WHERE display_meta LIKE '%_t_{$term}_%'" );
+				
+				if ( ( $count = count( $form_ids ) ) == 0 )
+				{
+					return "No forms available for term. {$term}";
+				}
+				
+				// Pick a random form
+				$atts[ 'id' ] = $form_ids[ rand( 0, $count - 1 ) ];
+				unset( $atts[ 'term' ] );
+			}
+			
+			return \GFForms::parse_shortcode( $atts, $content );
+		}
+
+		return "[random_gravityform] ( This shortcode requires gravity forms. )";
 	}
 	
 	

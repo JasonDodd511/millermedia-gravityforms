@@ -19,9 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @Wordpress\Options
  * @Wordpress\Options\Section( title="General Settings" )
- * @Wordpress\Options\Field( name="setting1", type="text", title="Setting 1" )
- * @Wordpress\Options\Field( name="setting2", type="select", title="Setting 2", options={ "opt1":"Option1", "opt2": "Option2" } )
- * @Wordpress\Options\Field( name="setting3", type="select", title="Setting 3", options="optionsCallback" )
+ * @Wordpress\Options\Field( name="classification_taxonomy", type="select", title="Quiz Classification Taxonomy", options="getTaxonomies" )
  */
 class Settings extends \Modern\Wordpress\Plugin\Settings
 {
@@ -43,13 +41,18 @@ class Settings extends \Modern\Wordpress\Plugin\Settings
 	 * @param		mixed			$currentValue				Current settings value
 	 * @return		array
 	 */ 
-	public function optionsCallback( $currentValue )
+	public function getTaxonomies( $currentValue )
 	{
-		return array
-		(
-			'opt3' => 'Option 3',
-			'opt4' => 'Option 4',
-		);
+		$taxonomies = get_taxonomies( array(), 'objects' );
+		$options = array( '' => 'None' );
+		
+		foreach ( $taxonomies as $taxonomy ) {
+			if ( $taxonomy->publicly_queryable and ! in_array( $taxonomy->name, array( 'post_format' ) ) ) {
+				$options[ $taxonomy->name ] = esc_html( $taxonomy->label );
+			}
+		}
+		
+		return $options;
 	}
 		
 }
