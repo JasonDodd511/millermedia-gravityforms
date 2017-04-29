@@ -6,6 +6,9 @@
  * Version: 0.2.0
  * Author: Kevin Carwile
  * Author URI: 
+ * GitHub Plugin URI: https://github.com/JasonDodd511/millermedia-gravityforms
+ * GitHub Branch:     master
+ * GitHub Languages:
  */
  
 if ( ! defined( 'ABSPATH' ) ) {
